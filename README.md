@@ -82,8 +82,4 @@ docker push efodikss/portal-frontend
 ## AWS
 docker pull efodikss/portal-frontend
 
-id(pin):1
-email(pin):"user1@user1.com"
-firstName(pin):null
-lastName(pin):null
-username(pin):"user1"
+docker run --name frontend -d -p 80:5000 efodikss/portal-frontend
