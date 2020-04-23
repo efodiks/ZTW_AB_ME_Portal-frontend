@@ -1,11 +1,16 @@
 # Select the image to use
 FROM node
 
-ADD build /app
+WORKDIR ./app
+
+COPY public ./public
+COPY src ./src
+COPY package.json package-lock.json ./
+
+RUN ls && npm install && npm run build
 
 RUN npm install -g serve
 
-WORKDIR /
-ENTRYPOINT ["serve","-s","app"]
+ENTRYPOINT ["serve","-s","build"]
 
 EXPOSE 5000
