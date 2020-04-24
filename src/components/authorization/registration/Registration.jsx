@@ -1,7 +1,7 @@
 import React from 'react';
 import RegistrationForm from './RegistrationForm.jsx';
 import { Row, Col, Container } from 'react-bootstrap';
-import {doRegister} from "./actions";
+import {doRegister} from "../actions";
 import {connect} from "react-redux";
 
 

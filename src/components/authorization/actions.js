@@ -45,7 +45,7 @@ export const doRegister = userDTO => {
 
         api.post('register', userDTO)
             .then(
-                ignore => dispatch(onRegisterSuccessful(userDTO)),
+                ignore => dispatch(doRegisterSuccessful(userDTO)),
                 error => dispatch(doRegisterFailed(error)));
     }
 };
@@ -58,7 +58,7 @@ export function doRegisterFailed(error) {
     }
 }
 
-const onRegisterSuccessful = (userDTO) => dispatch => {
+const doRegisterSuccessful = (userDTO) => dispatch => {
     dispatch(push('/'));
         dispatch({
             type: actionRegisterSuccessful,

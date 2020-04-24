@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Button, InputGroup, Card} from "react-bootstrap";
-import {useFormState} from "../../hooks/useFormState";
+import {useFormState} from "../../../hooks/useFormState";
 
 const RegistrationForm = ({handleRegister}) => {
 

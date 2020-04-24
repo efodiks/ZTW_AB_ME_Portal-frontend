@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Card, Form, InputGroup} from "react-bootstrap";
-import {useFormState} from "../../hooks/useFormState";
+import {useFormState} from "../../../hooks/useFormState";
 
 const LoginForm = ({handleLogin, handleRegisterLink}) => {
 
@@ -10,14 +10,23 @@ const LoginForm = ({handleLogin, handleRegisterLink}) => {
     };
 
     const [loginDto, onChange] = useFormState({});
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (e) => {
+        const form = e.currentTarget;
+        e.preventDefault();
+        e.stopPropagation();
+
+        if(form.checkValidity() === true) {
+            handleLogin(loginDto);
+        }
+        setValidated(true)
+    }
 
     return (
         <Card body>
-            <Form style={{padding: "2em"}} onSubmit={(e) => {
-                e.preventDefault();
-                handleLogin(loginDto)
-            }}>
-                <Form.Group controlId="registrationEmail">
+            <Form noValidate validated={validated} style={{padding: "2em"}} onSubmit={handleSubmit}>
+                <Form.Group controlId="loginEmail">
                     <Form.Label>Email address</Form.Label>
                     <InputGroup>
                         <InputGroup.Prepend>
@@ -28,7 +37,7 @@ const LoginForm = ({handleLogin, handleRegisterLink}) => {
                     </InputGroup>
                 </Form.Group>
 
-                <Form.Group controlId="validationCustomUsername">
+                <Form.Group controlId="loginPassword">
                     <Form.Label>Password</Form.Label>
                     <InputGroup>
                         <InputGroup.Prepend>

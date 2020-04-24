@@ -1,22 +1,17 @@
 import {
-    actionLoginFailed,
     actionLoginLoading,
     actionLoginSuccessful,
-    actionLogOut, actionRegisterFailed,
-    actionRegisterLoading, actionRegisterSuccessful
+    actionLoginFailed,
+    actionRegisterLoading,
+    actionRegisterSuccessful,
+    actionRegisterFailed,
+    actionLogOut
 } from './actions'
 
 const initialState = {
     loading: false,
     authorized: localStorage.getItem('token'),
     error: undefined,
-    user: {
-        email: '',
-        username: '',
-        firstName: 'Adam',
-        lastName: 'Nowak',
-        url: ''
-    }
 };
 
 export const loginReducer = (state = initialState, action) => {
