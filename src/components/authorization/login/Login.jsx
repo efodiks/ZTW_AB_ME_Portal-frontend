@@ -9,7 +9,8 @@ import {push} from "connected-react-router";
 
 const mapStateToProps = state => {
     return {
-        authorized: state.loginState.authorized
+        authorized: state.loginState.authorized,
+        loading: state.loginState.loading
     }
 };
 
@@ -20,13 +21,13 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const Login = ({authorized, handleLogin, handleRegisterLink}) => {
+const Login = ({authorized, loading, handleLogin, handleRegisterLink}) => {
     return (
         authorized ? <Redirect to={"/feed"}/> :
             <Container>
                 <Row className="justify-content-center" style={{margin: "10em 0em 10em 0em"}}>
                     <Col lg={6}>
-                        <LoginForm handleLogin={handleLogin} handleRegisterLink={handleRegisterLink}/>
+                        <LoginForm handleLogin={handleLogin} loginLoading={loading} handleRegisterLink={handleRegisterLink}/>
                     </Col>
                 </Row>
             </Container>

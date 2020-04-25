@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, Card, Form, InputGroup} from "react-bootstrap";
+import {Button, Card, Form, InputGroup, Spinner} from "react-bootstrap";
 import * as yup from 'yup'
 import {Formik} from 'formik'
 
-const LoginForm = ({handleLogin, handleRegisterLink}) => {
+const LoginForm = ({handleLogin, loginLoading, handleRegisterLink}) => {
 
     const signFormStyle = {
         width: "3em",
@@ -76,8 +76,9 @@ const LoginForm = ({handleLogin, handleRegisterLink}) => {
                                 Register
                             </Button>
 
-                            <Button id="signIn" variant="info" type="submit" style={{width: "30%", margin: "1em"}}>
-                                Sign in
+                            <Button id="signIn" variant="info" type="submit" disabled={loginLoading} style={{width: "30%", margin: "1em"}}>
+                                {!loginLoading && <div>Sign in</div>}
+                                {loginLoading && <Spinner animation='border' size='sm'/>}
                             </Button>
                         </div>
                     </Form>

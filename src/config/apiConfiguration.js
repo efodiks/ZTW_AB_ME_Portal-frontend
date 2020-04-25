@@ -4,7 +4,7 @@ const api = axios.create({
     baseURL: 'http://64.225.92.27:8080/api/'
 });
 
-const onFulfilled = requestConfig => {
+const authorizationRequestInterceptor = requestConfig => {
     const token = localStorage.getItem('token');
     if (token) {
         requestConfig.headers.Authorization = `Bearer ${token}`
@@ -12,6 +12,18 @@ const onFulfilled = requestConfig => {
     return requestConfig
 };
 
-api.interceptors.request.use(onFulfilled);
+const delayingRequestInterceptor = timeOutInMs => requestConfig => {
+    return new Promise(resolve =>
+        setTimeout(() => resolve(requestConfig), timeOutInMs))
+}
+
+const errorLoggingResponseInterceptor = error => {
+    console.log(error)
+    return Promise.reject(error)
+}
+
+api.interceptors.request.use(authorizationRequestInterceptor);
+api.interceptors.request.use(delayingRequestInterceptor(2000))
+api.interceptors.response.use(null, errorLoggingResponseInterceptor)
 
 export default api;

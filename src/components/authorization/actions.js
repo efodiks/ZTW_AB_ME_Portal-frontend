@@ -23,7 +23,6 @@ export function doLoginRequest(loginDTO) {
 }
 
 export function doLoginFailed(error) {
-    console.log(error);
     return {
         type: actionLoginFailed,
         error: error
@@ -61,8 +60,7 @@ export function doRegisterFailed(error) {
 const doRegisterSuccessful = (userDTO) => dispatch => {
     dispatch(push('/'));
         dispatch({
-            type: actionRegisterSuccessful,
-            userDTO: userDTO
+            type: actionRegisterSuccessful
         });
         dispatch(doLoginRequest({
             email: userDTO.email,
