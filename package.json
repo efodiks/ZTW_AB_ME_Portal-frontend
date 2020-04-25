@@ -9,6 +9,7 @@
     "axios": "latest",
     "bootstrap": "^4.4.1",
     "connected-react-router": "latest",
+    "formik": "^2.1.4",
     "history": "latest",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
@@ -18,7 +19,8 @@
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "latest"
+    "redux-thunk": "latest",
+    "yup": "^0.28.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, Card, Form, InputGroup} from "react-bootstrap";
-import {useFormState} from "../../../hooks/useFormState";
+import * as yup from 'yup'
+import {Formik} from 'formik'
 
 const LoginForm = ({handleLogin, handleRegisterLink}) => {
 
@@ -9,56 +10,80 @@ const LoginForm = ({handleLogin, handleRegisterLink}) => {
         display: "inline"
     };
 
-    const [loginDto, onChange] = useFormState({});
-    const [validated, setValidated] = useState(false);
-
-    const handleSubmit = (e) => {
-        const form = e.currentTarget;
-        e.preventDefault();
-        e.stopPropagation();
-
-        if(form.checkValidity() === true) {
-            handleLogin(loginDto);
-        }
-        setValidated(true)
-    }
+    const schema = yup.object().shape({
+        email: yup.string().email().required("Email required"),
+        password: yup.string().required("Password required")
+    })
 
     return (
         <Card body>
-            <Form noValidate validated={validated} style={{padding: "2em"}} onSubmit={handleSubmit}>
-                <Form.Group controlId="loginEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend" style={signFormStyle}>@</InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control type="email" placeholder="Email" name="email" onChange={onChange} required/>
-                        <Form.Control.Feedback type="invalid">Please enter your email.</Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
+            <Formik
+                validationSchema={schema}
+                onSubmit={handleLogin}
+                initialValues={{
+                    email: '',
+                    password: ''
+                }}
+            >
+                {({
+                      handleSubmit,
+                      handleChange,
+                      handleBlur,
+                      values,
+                      touched,
+                      _,
+                      errors
+                  }) => (
+                    <Form noValidate style={{padding: "2em"}} onSubmit={handleSubmit}>
+                        <Form.Group controlId="loginEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="inputGroupPrepend" style={signFormStyle}>@</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    isInvalid={errors.email && touched.email}/>
+                                <Form.Control.Feedback type="invalid">Please enter your email.</Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
 
-                <Form.Group controlId="loginPassword">
-                    <Form.Label>Password</Form.Label>
-                    <InputGroup>
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="inputGroupPrepend" style={signFormStyle}>*</InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control type="password" placeholder="Password" name="password" required
-                                      onChange={onChange}/>
-                        <Form.Control.Feedback type="invalid">Please enter the password.</Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
+                        <Form.Group controlId="loginPassword">
+                            <Form.Label>Password</Form.Label>
+                            <InputGroup>
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text id="inputGroupPrepend" style={signFormStyle}>*</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control type="password"
+                                              name="password"
+                                              placeholder="Password"
+                                              value={values.password}
+                                              onChange={handleChange}
+                                              onBlur={handleBlur}
+                                              isInvalid={errors.password && touched.password}/>
+                                <Form.Control.Feedback type="invalid">Please enter the password.</Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
 
-                <div className="d-flex justify-content-center">
-                    <Button id="register" variant="info" onClick={handleRegisterLink} style={{width: "30%", margin: "1em"}}>
-                        Register
-                    </Button>
+                        <div className="d-flex justify-content-center">
+                            <Button id="register" variant="info" onClick={handleRegisterLink}
+                                    style={{width: "30%", margin: "1em"}}>
+                                Register
+                            </Button>
 
-                    <Button id="signIn" variant="info" type="submit" style={{width: "30%", margin: "1em"}}>
-                        Sign in
-                    </Button>
-                </div>
-            </Form>
+                            <Button id="signIn" variant="info" type="submit" style={{width: "30%", margin: "1em"}}>
+                                Sign in
+                            </Button>
+                        </div>
+                    </Form>
+                )
+                }
+            </Formik>
         </Card>
     );
 };
