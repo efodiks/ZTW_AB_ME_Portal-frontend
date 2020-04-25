@@ -6,15 +6,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {loginReducer} from "./components/authorization/reducer";
+import {loginReducer} from "./components/authorization/login/reducer";
 import {connectRouter, routerMiddleware} from "connected-react-router";
 import {createBrowserHistory} from 'history'
 import {composeWithDevTools} from "redux-devtools-extension";
 import {dashboardReducer} from "./components/dashboard/reducer";
+import {registerReducer} from "./components/authorization/registration/reducer";
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
     loginState: loginReducer,
+    registrationState: registerReducer,
     dashboardState: dashboardReducer
 });
 

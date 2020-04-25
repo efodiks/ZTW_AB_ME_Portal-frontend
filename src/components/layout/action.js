@@ -1,5 +1,5 @@
 import {push} from "connected-react-router";
-import {actionLogOut} from "../authorization/actions";
+import {actionLogOut} from "../authorization/login/actions";
 
 export function doLogOut () {
     return dispatch => {

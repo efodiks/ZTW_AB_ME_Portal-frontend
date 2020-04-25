@@ -2,7 +2,7 @@ import React from 'react';
 import LoginForm from './LoginForm.jsx';
 import {Col, Container, Row} from 'react-bootstrap';
 import {connect} from "react-redux";
-import {clearLoginErrors, doLoginRequest} from "../actions";
+import {clearLoginErrors, doLoginRequest} from "./actions";
 import {Redirect} from "react-router-dom";
 
 const mapStateToProps = state => {

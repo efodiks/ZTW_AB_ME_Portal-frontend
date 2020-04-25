@@ -1,6 +1,5 @@
 import api from '../../config/apiConfiguration';
 import {push} from "connected-react-router";
-import {actionLogOut} from "../authorization/actions";
 
 export const actionAddPostSuccess = 'dashboard/addPostSuccess';
 export const actionAddPostFailure = 'dashboard/addPostFailure';
@@ -78,15 +77,5 @@ const onErrorGetUserPosts = error => {
     return {
         type: actionGetUserPostsFailure,
         error: error
-    }
-}
-
-export function doLogOut () {
-    return dispatch => {
-        localStorage.clear();
-        dispatch({
-            type: actionLogOut
-        });
-        dispatch(push('/'))
     }
 }
