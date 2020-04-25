@@ -5,6 +5,7 @@ export const actionLoginLoading = 'authorization/loginLoading';
 export const actionLoginFailed = 'authorization/loginFailed';
 export const actionLoginSuccessful = 'authorization/loginSuccessful';
 export const actionLogOut = 'authorization/loginLogOut';
+export const clearLoginErrors = 'authorization/login/clearErrors';
 
 export const actionRegisterLoading = 'authorization/registerLoading';
 export const actionRegisterFailed = 'authorization/registerError';

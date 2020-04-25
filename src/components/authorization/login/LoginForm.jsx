@@ -1,90 +1,95 @@
 import React from 'react';
-import {Button, Card, Form, InputGroup, Spinner} from "react-bootstrap";
-import * as yup from 'yup'
-import {Formik} from 'formik'
+import {Alert, Button, Card, Form, InputGroup, Row, Spinner} from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import {useFormState} from "../../../hooks/useFormState";
+import {Link} from "react-router-dom";
 
-const LoginForm = ({handleLogin, loginLoading, handleRegisterLink}) => {
+const LoginForm = ({handleLogin, loginLoading, loginError, handleClearErrors}) => {
 
     const signFormStyle = {
         width: "3em",
         display: "inline"
     };
 
-    const schema = yup.object().shape({
-        email: yup.string().email().required("Email required"),
-        password: yup.string().required("Password required")
-    })
+    const [loginState, handleChange] = useFormState({
+        email: '',
+        password: ''
+    }, loginError, handleClearErrors)
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        handleLogin(loginState)
+    }
 
     return (
         <Card body>
-            <Formik
-                validationSchema={schema}
-                onSubmit={handleLogin}
-                initialValues={{
-                    email: '',
-                    password: ''
-                }}
-            >
-                {({
-                      handleSubmit,
-                      handleChange,
-                      handleBlur,
-                      values,
-                      touched,
-                      _,
-                      errors
-                  }) => (
-                    <Form noValidate style={{padding: "2em"}} onSubmit={handleSubmit}>
-                        <Form.Group controlId="loginEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <InputGroup>
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="inputGroupPrepend" style={signFormStyle}>@</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <Form.Control
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email"
-                                    value={values.email}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    isInvalid={errors.email && touched.email}/>
-                                <Form.Control.Feedback type="invalid">Please enter your email.</Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
+            <Container fluid>
+                <Row>
+                    <Col>
+                        <Alert variant='danger' show={loginError !== null}>Something went wrong!</Alert>
+                    </Col>
+                </Row>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="loginEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="inputGroupPrepend"
+                                                 style={signFormStyle}>@</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                value={loginState.email}
+                                onChange={handleChange}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">Please enter your
+                                email.</Form.Control.Feedback>
+                        </InputGroup>
+                    </Form.Group>
 
-                        <Form.Group controlId="loginPassword">
-                            <Form.Label>Password</Form.Label>
-                            <InputGroup>
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="inputGroupPrepend" style={signFormStyle}>*</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <Form.Control type="password"
-                                              name="password"
-                                              placeholder="Password"
-                                              value={values.password}
-                                              onChange={handleChange}
-                                              onBlur={handleBlur}
-                                              isInvalid={errors.password && touched.password}/>
-                                <Form.Control.Feedback type="invalid">Please enter the password.</Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
-
-                        <div className="d-flex justify-content-center">
-                            <Button id="register" variant="info" onClick={handleRegisterLink}
-                                    style={{width: "30%", margin: "1em"}}>
-                                Register
-                            </Button>
-
-                            <Button id="signIn" variant="info" type="submit" disabled={loginLoading} style={{width: "30%", margin: "1em"}}>
+                    <Form.Group controlId="loginPassword">
+                        <Form.Label>Password</Form.Label>
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="inputGroupPrepend"
+                                                 style={signFormStyle}>*</InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control type="password"
+                                          name="password"
+                                          placeholder="Password"
+                                          value={loginState.password}
+                                          onChange={handleChange}
+                                          required
+                            />
+                            <Form.Control.Feedback type="invalid">Please enter the
+                                password.</Form.Control.Feedback>
+                        </InputGroup>
+                    </Form.Group>
+                    <Row className="justify-content-center">
+                        <div>
+                            Need an account? Register <Link to='/register'>here.</Link>
+                        </div>
+                    </Row>
+                    <Row className="justify-content-center">
+                        <Col md={6}>
+                            <Button id="signIn"
+                                    variant="info"
+                                    type="submit"
+                                    disabled={loginLoading}
+                                    style={{marginTop: "1em"}}
+                                    block>
                                 {!loginLoading && <div>Sign in</div>}
                                 {loginLoading && <Spinner animation='border' size='sm'/>}
                             </Button>
-                        </div>
-                    </Form>
-                )
-                }
-            </Formik>
+                        </Col>
+                    </Row>
+                </Form>
+            </Container>
         </Card>
     );
 };

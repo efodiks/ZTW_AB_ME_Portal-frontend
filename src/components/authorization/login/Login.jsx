@@ -2,32 +2,32 @@ import React from 'react';
 import LoginForm from './LoginForm.jsx';
 import {Col, Container, Row} from 'react-bootstrap';
 import {connect} from "react-redux";
-import {doLoginRequest} from "../actions";
+import {clearLoginErrors, doLoginRequest} from "../actions";
 import {Redirect} from "react-router-dom";
-import {push} from "connected-react-router";
-
 
 const mapStateToProps = state => {
     return {
         authorized: state.loginState.authorized,
-        loading: state.loginState.loading
+        loading: state.loginState.loading,
+        error: state.loginState.error
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         handleLogin: loginDTO => dispatch(doLoginRequest(loginDTO)),
-        handleRegisterLink: () => dispatch(push('/register'))
+        handleClearErrors: () => dispatch({type: clearLoginErrors})
     }
 };
 
-const Login = ({authorized, loading, handleLogin, handleRegisterLink}) => {
+const Login = ({authorized, loading, error, handleClearErrors, handleLogin}) => {
     return (
         authorized ? <Redirect to={"/feed"}/> :
             <Container>
                 <Row className="justify-content-center" style={{margin: "10em 0em 10em 0em"}}>
                     <Col lg={6}>
-                        <LoginForm handleLogin={handleLogin} loginLoading={loading} handleRegisterLink={handleRegisterLink}/>
+                        <LoginForm handleLogin={handleLogin} loginLoading={loading} loginError={error}
+                                   handleClearErrors={handleClearErrors}/>
                     </Col>
                 </Row>
             </Container>
