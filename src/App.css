@@ -52,3 +52,9 @@
   justify-content: center;
   padding: 3em;
 }
+
+.user-profile-username {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 3em;
+}

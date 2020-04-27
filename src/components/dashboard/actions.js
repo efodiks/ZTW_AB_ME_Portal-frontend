@@ -79,3 +79,11 @@ const onErrorGetUserPosts = error => {
         error: error
     }
 }
+
+export const getSpecificUserPosts = user => {
+    return (dispatch) => {
+        api.get(`users/${user.id}/posts`, user.id)
+            .then(response => dispatch(onSuccessfulGetUserPosts(response.data)),
+                error => onErrorGetUserPosts(error));
+    };
+}

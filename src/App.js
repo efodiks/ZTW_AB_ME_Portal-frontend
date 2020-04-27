@@ -5,6 +5,7 @@ import Login from './components/authorization/login/Login.jsx';
 import Registration from './components/authorization/registration/Registration.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import Feed from './components/dashboard/Feed.jsx';
+import UserProfile from './components/user-profile/UserProfile.jsx';
 import {Route, Switch} from 'react-router-dom';
 import {Provider} from "react-redux";
 import {ConnectedRouter} from "connected-react-router";
@@ -19,6 +20,7 @@ function App({store}) {
                     <Route path="/dashboard" component={Dashboard}/>
                     <Route path="/register" component={Registration}/>
                     <Route path="/feed" component={Feed}/>
+                    <Route path="/user/:userId" component={UserProfile}/>
                     <Route path="/" exact component={Login}/>
                 </Switch>
             </ConnectedRouter>

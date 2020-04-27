@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
 const PostsList = ({posts, handleGetPosts}) => {
 
-    useEffect(handleGetPosts, []);
+    useEffect(() => handleGetPosts, []);
 
     return (
         <Container style={{marginTop: "1em", marginBottom: "1em"}}>
