@@ -43,13 +43,12 @@
 
 .profile-picture {
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden
+  background-size: cover;
+  background-position: center;
 }
 
-.profile-picture img{
-  min-width: 100%;
-  min-height: 100%
+.avatar-user-profile {
+  display: flex;
+  justify-content: center;
+  padding: 3em;
 }
