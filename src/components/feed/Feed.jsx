@@ -2,7 +2,14 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Row} from 'react-bootstrap';
 import PostsList from '../layout/PostsList';
-import {getAllPosts} from './actions';
+import {getAllPosts} from '../feed/actions';
+import {useEffect} from 'react';
+
+const mapStateToProps = state => {
+    return {
+        posts: state.feedState.posts
+    }
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -10,15 +17,15 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const Feed = ({handleGetAllPosts}) => {
+const Feed = ({posts, handleGetAllPosts}) => {
 
     return (
         <div>
             <Row className="w-100">
-                <PostsList handleGetPosts={handleGetAllPosts} />
+                <PostsList posts={posts} handleGetPosts={handleGetAllPosts} />
             </Row>
         </div>
     )
 }
 
-export default connect(null, mapDispatchToProps)(Feed);
+export default connect(mapStateToProps, mapDispatchToProps)(Feed);

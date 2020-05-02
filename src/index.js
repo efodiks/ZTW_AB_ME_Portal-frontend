@@ -12,12 +12,16 @@ import {createBrowserHistory} from 'history'
 import {composeWithDevTools} from "redux-devtools-extension";
 import {dashboardReducer} from "./components/dashboard/reducer";
 import {registerReducer} from "./components/authorization/registration/reducer";
+import {feedReducer} from "./components/feed/reducer";
+import {userProfileReducer} from "./components/user-profile/reducer";
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
     loginState: loginReducer,
     registrationState: registerReducer,
-    dashboardState: dashboardReducer
+    dashboardState: dashboardReducer,
+    feedState: feedReducer,
+    userProfileState: userProfileReducer
 });
 
 export const history = createBrowserHistory();

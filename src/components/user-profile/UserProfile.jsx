@@ -3,7 +3,7 @@ import React from 'react';
 import UserCard from './UserCard.jsx';
 import PostsList from '../layout/PostsList.jsx';
 import {Row, Container, Col} from 'react-bootstrap';
-import {getSpecificUserPosts} from '../dashboard/actions';
+import {getSpecificUserPosts, getSpecificUserData} from '../user-profile/actions';
 import {connect} from "react-redux";
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -11,26 +11,22 @@ import {Redirect} from 'react-router-dom';
 
 const mapStateToProps = state => {
     return {
-        authorized: state.loginState.authorized
+        authorized: state.loginState.authorized,
+        user: state.userProfileState.user,
+        posts: state.userProfileState.posts
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        handleGetSpecificUserData: userId => dispatch(getSpecificUserData(userId)),
         handleGetSpecificUserPosts: user => dispatch(getSpecificUserPosts(user))
     }
 }
 
-const UserProfile = ({authorized, handleGetSpecificUserPosts, match}) => {
+const UserProfile = ({authorized, user, posts, handleGetSpecificUserData, handleGetSpecificUserPosts, match}) => {
 
-    const [user, setUser] = useState({
-        id: match.params.userId
-    });
-
-    useEffect(() => {
-        api.get(`users/${user.id}`, user.id)
-            .then(response => setUser(response.data));
-    }, []);
+    useEffect(() => handleGetSpecificUserData(match.params.userId), []);
 
     return (
         authorized ? <div style={{margin: "1em 5em"}}>
@@ -39,7 +35,7 @@ const UserProfile = ({authorized, handleGetSpecificUserPosts, match}) => {
                     <UserCard user={user}/>
                 </Col>
                 <Col lg={8}>
-                    <PostsList handleGetPosts={handleGetSpecificUserPosts(user)}/>
+                    <PostsList posts={posts} handleGetPosts={() => handleGetSpecificUserPosts(match.params.userId)}/>
                 </Col>
             </Row>
         </div> : <Redirect to={"/"}/> 

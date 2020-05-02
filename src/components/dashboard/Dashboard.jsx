@@ -5,6 +5,13 @@ import {connect} from "react-redux";
 import {doAddPost, getUserPosts} from "./actions";
 import {Route} from "react-router-dom";
 import AddPost from "./AddPost";
+import { useEffect } from 'react';
+
+const mapStateToProps = state => {
+    return {
+        posts: state.dashboardState.posts
+    }
+}
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -13,15 +20,16 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const Dashboard = ({handleAddPost, handleGetMyPosts, match}) => {
+const Dashboard = ({posts, handleAddPost, handleGetMyPosts, match}) => {
+
     return (
         <div>
             <Row className="w-100">
-                <Route path={`${match.path}/posts`} render={() => <PostsList handleGetPosts={handleGetMyPosts}/>}/>
+                <Route path={`${match.path}/posts`} render={() => <PostsList posts={posts} handleGetPosts={handleGetMyPosts}/>}/>
                 <Route path={`${match.path}/addpost`} render={() => <AddPost handleAddPost={handleAddPost}/>}/>
             </Row>
         </div>
     )
 };
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

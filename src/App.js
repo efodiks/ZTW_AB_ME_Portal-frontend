@@ -4,7 +4,7 @@ import NavigationBar from './components/layout/NavigationBar.jsx';
 import Login from './components/authorization/login/Login.jsx';
 import Registration from './components/authorization/registration/Registration.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
-import Feed from './components/dashboard/Feed.jsx';
+import Feed from './components/feed/Feed.jsx';
 import UserProfile from './components/user-profile/UserProfile.jsx';
 import {Route, Switch} from 'react-router-dom';
 import {Provider} from "react-redux";

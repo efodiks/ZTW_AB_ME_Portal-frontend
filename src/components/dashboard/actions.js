@@ -3,8 +3,6 @@ import {push} from "connected-react-router";
 
 export const actionAddPostSuccess = 'dashboard/addPostSuccess';
 export const actionAddPostFailure = 'dashboard/addPostFailure';
-export const actionGetAllPostsSuccess = 'dashboard/getAllPostsSuccess';
-export const actionGetAllPostsFailure = 'dashboard/getAllPostsFailure';
 export const actionGetUserPostsSuccess = 'dashboard/getUserPostsSuccess';
 export const actionGetUserPostsFailure = 'dashboard/getUserPostsFailure';
 
@@ -34,29 +32,6 @@ const onErrorAddPost = error => {
     }
 };
 
-export function getAllPosts () {
-    return (dispatch) => {
-        api.get('posts')
-            .then(response => dispatch(onSuccessfulGetAllPosts(response.data)),
-               error => onErrorGetAllPosts(error));
-    }
-}
-
-const onSuccessfulGetAllPosts = posts => {
-    return {
-        type: actionGetAllPostsSuccess,
-        posts: posts
-    }
-}
-
-const onErrorGetAllPosts = error => {
-    console.log(error)
-    return {
-        type: actionGetAllPostsFailure,
-        error: error
-    }
-}
-
 export function getUserPosts () {
     return (dispatch) => {
         api.get('posts/me')
@@ -78,12 +53,4 @@ const onErrorGetUserPosts = error => {
         type: actionGetUserPostsFailure,
         error: error
     }
-}
-
-export const getSpecificUserPosts = user => {
-    return (dispatch) => {
-        api.get(`users/${user.id}/posts`, user.id)
-            .then(response => dispatch(onSuccessfulGetUserPosts(response.data)),
-                error => onErrorGetUserPosts(error));
-    };
 }
