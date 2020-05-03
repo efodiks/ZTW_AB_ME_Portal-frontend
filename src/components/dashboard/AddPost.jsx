@@ -1,10 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Card, Col, Container, Form, Row} from 'react-bootstrap';
 import {useFormState} from "../../hooks/useFormState";
+import PhotoUpload from './PhotoUpload';
+import axios from 'axios';
 
 const AddPost = ({handleAddPost}) => {
 
-    const [postDto, onChange] = useFormState({});
+    const [postDto, setPostDto] = useState({
+        url: "",
+        description: ""
+    });
+
+    const [files, setFiles] = useState([]);
+
+    const onDrop = acceptedFiles => {
+        setFiles(acceptedFiles.map(file => Object.assign(file, {
+            preview: URL.createObjectURL(file)
+        })))};
+
+    const onChange = (e) => {
+        e.persist();
+        const {name, value} = e.target;
+        
+        setPostDto((prevState => {
+            return {
+                ...prevState,
+                [name]: value
+            }
+        }))
+    };
+
+    const onFormSubmit = () => {
+        const cloudName = process.env.REACT_APP_CLOUD_NAME;
+        const uploadURL = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+        
+        files.map(file => {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", process.env.REACT_APP_CLOUD_PRESET);
+            formData.append("folder", process.env.REACT_APP_CLOUD_FOLDER);
+            formData.append("timestamp", (Date.now() / 1000) | 0);
+            axios.post(uploadURL, formData)
+            .then(response => {
+                setPostDto({...postDto, url: response.data.secure_url});
+                handleAddPost({url: response.data.secure_url, description: postDto.description});
+            });
+        });
+    }
 
     return (
         <Container>
@@ -13,20 +55,10 @@ const AddPost = ({handleAddPost}) => {
                     <h1>Add post</h1>
                     <Form onSubmit={e => {
                         e.preventDefault();
-                        handleAddPost(postDto);
+                        onFormSubmit();
                     }}>
-                        <Form.Row style={{marginTop: "1em"}}>
-                            <Form.Label column lg={2}>
-                                Picture URL
-                            </Form.Label>
-                            <Col>
-                                <Form.Control type="text" placeholder="URL" name="url" onChange={onChange}/>
-                            </Col>
-                        </Form.Row>
+                        <PhotoUpload files={files} onDrop={onDrop}/>
                         <Form.Row style={{marginTop: "1em", marginBottom: "1em"}}>
-                            <Form.Label column lg={2}>
-                                Description
-                            </Form.Label>
                             <Col>
                                 <Form.Control as="textarea" placeholder="Description..." name="description"
                                               onChange={onChange}/>
