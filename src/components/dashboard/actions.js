@@ -3,7 +3,9 @@ import {push} from "connected-react-router";
 
 export const actionAddPostSuccess = 'dashboard/addPostSuccess';
 export const actionAddPostFailure = 'dashboard/addPostFailure';
+
 export const actionGetUserPostsSuccess = 'dashboard/getUserPostsSuccess';
+export const actionGetUserPostsLoading = 'dashboard/getUserPostsLoading';
 export const actionGetUserPostsFailure = 'dashboard/getUserPostsFailure';
 
 export const doAddPost = postDTO => {
@@ -34,6 +36,8 @@ const onErrorAddPost = error => {
 
 export function getUserPosts () {
     return (dispatch) => {
+        dispatch({type: actionGetUserPostsLoading})
+
         api.get('posts/me')
             .then(response => dispatch(onSuccessfulGetUserPosts(response.data)),
                error => onErrorGetUserPosts(error));

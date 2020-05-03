@@ -1,11 +1,9 @@
 import React from 'react';
 import {CardColumns, Container} from 'react-bootstrap';
 import PostCard from './PostCard.jsx';
-import { useEffect } from 'react';
 
-const PostsList = ({posts, handleGetPosts}) => {
+const PostsList = ({posts}) => {
 
-    useEffect(() => handleGetPosts(), []);
 
     return (
         <Container style={{marginTop: "1em", marginBottom: "1em"}}>

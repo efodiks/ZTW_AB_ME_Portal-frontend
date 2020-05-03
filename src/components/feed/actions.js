@@ -1,10 +1,12 @@
 import api from '../../config/apiConfiguration';
 
 export const actionGetAllPostsSuccess = 'feed/getAllPostsSuccess';
+export const actionGetAllPostsLoading = 'feed/getAllPostsLoading';
 export const actionGetAllPostsFailure = 'feed/getAllPostsFailure';
 
 export function getAllPosts () {
     return (dispatch) => {
+        dispatch({type: actionGetAllPostsLoading})
         api.get('posts')
             .then(response => dispatch(onSuccessfulGetAllPosts(response.data)),
                error => onErrorGetAllPosts(error));

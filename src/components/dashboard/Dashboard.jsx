@@ -5,11 +5,13 @@ import {connect} from "react-redux";
 import {doAddPost, getUserPosts} from "./actions";
 import {Route} from "react-router-dom";
 import AddPost from "./AddPost";
-import { useEffect } from 'react';
+import LoaderHoc from "../layout/LoaderHoc";
 
 const mapStateToProps = state => {
     return {
-        posts: state.dashboardState.posts
+        posts: state.dashboardState.posts,
+        loading: state.dashboardState.loading,
+        error: state.dashboardState.error
     }
 }
 
@@ -20,12 +22,12 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const Dashboard = ({posts, handleAddPost, handleGetMyPosts, match}) => {
+const Dashboard = ({posts, loading, error, handleAddPost, handleGetMyPosts, match}) => {
 
     return (
         <div>
             <Row className="w-100">
-                <Route path={`${match.path}/posts`} render={() => <PostsList posts={posts} handleGetPosts={handleGetMyPosts}/>}/>
+                <Route path={`${match.path}/posts`} render={() => <LoaderHoc name="posts" loading={loading} loadData={handleGetMyPosts} Component={PostsList} posts={posts} />}/>
                 <Route path={`${match.path}/addpost`} render={() => <AddPost handleAddPost={handleAddPost}/>}/>
             </Row>
         </div>
