@@ -9,7 +9,7 @@ const UserCard = ({user}) => {
         <Container style={{marginTop: "1em", marginBottom: "1em"}}>
              <Card>
                 <div className="avatar-user-profile">
-                    {user.url ? <Avatar imgSrc={user.url} size={15}/> : <Avatar imgSrc={blankUserImage} size={15}/>}
+                    {user.profilePhotoUrl ? <Avatar imgSrc={user.profilePhotoUrl} size={15}/> : <Avatar imgSrc={blankUserImage} size={15}/>}
                 </div>
                 <div className="user-profile-username">
                     <h2>{user.username}</h2>

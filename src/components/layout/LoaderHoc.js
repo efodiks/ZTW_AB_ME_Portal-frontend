@@ -14,7 +14,7 @@ const LoaderHoc = ({
 
     if (loading) {
         return (
-            <Container style={{"margin-top": 4}}>
+            <Container style={{"marginTop": 4}}>
                 <Row className="justify-content-center">
                     <Spinner animation="border"/>
                 </Row>

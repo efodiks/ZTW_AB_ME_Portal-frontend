@@ -7,10 +7,10 @@ const PostCard = ({ author, imgSrc, description }) => {
     
     return (
         <Card style={{padding: "0.5em"}}>
-            <Link to={`/user/${author.id}`} className="user-link">
+            <Link to={`/user/${author.uuid}`} className="user-link">
                 <div style={{display: "inline-flex", alignItems: "center", margin: "0em 0.2em 0.5em 0.2em"}}>
-                    {author.url && <Avatar
-                        imgSrc={author.url}
+                    {author.profilePhotoUrl && <Avatar
+                        imgSrc={author.profilePhotoUrl}
                         size="3.5"
                     />}
                     <Card.Title className="m-3">{author.username}</Card.Title>

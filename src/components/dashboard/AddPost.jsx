@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Card, Col, Container, Form, Row} from 'react-bootstrap';
-import {useFormState} from "../../hooks/useFormState";
 import PhotoUpload from './PhotoUpload';
 import axios from 'axios';
+import {v4 as uuidv4} from 'uuid'
 
 const AddPost = ({handleAddPost}) => {
 
@@ -16,12 +16,13 @@ const AddPost = ({handleAddPost}) => {
     const onDrop = acceptedFiles => {
         setFiles(acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file)
-        })))};
+        })))
+    };
 
     const onChange = (e) => {
         e.persist();
         const {name, value} = e.target;
-        
+
         setPostDto((prevState => {
             return {
                 ...prevState,
@@ -33,7 +34,7 @@ const AddPost = ({handleAddPost}) => {
     const onFormSubmit = () => {
         const cloudName = process.env.REACT_APP_CLOUD_NAME;
         const uploadURL = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-        
+
         files.map(file => {
             const formData = new FormData();
             formData.append("file", file);
@@ -41,12 +42,13 @@ const AddPost = ({handleAddPost}) => {
             formData.append("folder", process.env.REACT_APP_CLOUD_FOLDER);
             formData.append("timestamp", (Date.now() / 1000) | 0);
             axios.post(uploadURL, formData)
-            .then(response => {
-                setPostDto({...postDto, url: response.data.secure_url});
-                handleAddPost({url: response.data.secure_url, description: postDto.description});
-            });
-        });
-    }
+                .then(response => {
+                    setPostDto({...postDto, url: response.data.secure_url});
+                    handleAddPost({url: response.data.secure_url, description: postDto.description, uuid: uuidv4()});
+                },
+                    error => console.log(error))
+        })
+    };
 
     return (
         <Container>
@@ -60,7 +62,8 @@ const AddPost = ({handleAddPost}) => {
                         <PhotoUpload files={files} onDrop={onDrop}/>
                         <Form.Row style={{marginTop: "1em", marginBottom: "1em"}}>
                             <Col>
-                                <Form.Control as="textarea" placeholder="Description..." name="description"
+                                <Form.Control as="textarea" placeholder="Description..."
+                                              name="description"
                                               onChange={onChange}/>
                             </Col>
                         </Form.Row>
@@ -73,7 +76,6 @@ const AddPost = ({handleAddPost}) => {
                 </Card>
             </Row>
         </Container>
-    )
-};
-
+    );
+}
 export default AddPost;
