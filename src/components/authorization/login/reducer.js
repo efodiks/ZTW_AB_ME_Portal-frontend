@@ -3,6 +3,7 @@ import {actionLoginFailed, actionLoginLoading, actionLoginSuccessful, actionLogO
 const initialState = {
     loading: false,
     authorized: localStorage.getItem('token'),
+    loggedInUser: JSON.parse(localStorage.getItem('loggedInUser')),
     error: null
 };
 
@@ -15,7 +16,7 @@ export const loginReducer = (state = initialState, action) => {
         case actionLoginFailed:
             return {loading: false, error: action.error, authorized: false};
         case actionLoginSuccessful:
-            return {loading: false, error: null, authorized: true};
+            return {loading: false, error: null, authorized: true, loggedInUser: action.loggedInUser};
         case actionLogOut:
             return {loading: false, error: null, authorized: false};
         default:

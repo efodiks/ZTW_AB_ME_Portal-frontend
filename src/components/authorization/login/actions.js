@@ -12,7 +12,7 @@ export function doLoginRequest(loginDTO) {
             type: actionLoginLoading
         });
         api.post('authenticate', loginDTO)
-            .then(response => dispatch(doLoginSuccessful(response.data.tokenString)),
+            .then(response => dispatch(doLoginSuccessful(response.data)),
                 error => dispatch(doLoginFailed(error)))
     }
 }
@@ -24,9 +24,11 @@ export function doLoginFailed(error) {
     }
 }
 
-export function doLoginSuccessful(token) {
-    localStorage.setItem('token', token);
+export function doLoginSuccessful(data) {
+    localStorage.setItem('token', data.token.tokenString);
+    localStorage.setItem('loggedInUser', JSON.stringify(data.userDto));
     return {
-        type: actionLoginSuccessful
+        type: actionLoginSuccessful,
+        loggedInUser: data.userDto
     }
 }
