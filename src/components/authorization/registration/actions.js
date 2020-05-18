@@ -1,6 +1,8 @@
 import api from "../../../config/apiConfiguration";
 import {push} from "connected-react-router";
 import {doLoginRequest} from "../login/actions";
+import {v4 as uuidv4} from 'uuid'
+
 
 export const actionRegisterLoading = 'authorization/register/loading';
 export const actionRegisterFailed = 'authorization/register/error';
@@ -13,9 +15,11 @@ export const doRegister = userDTO => {
             type: actionRegisterLoading
         });
 
-        api.post('register', userDTO)
+        const userWithUuid = {...userDTO, uuid: uuidv4()}
+
+        api.post('register', userWithUuid)
             .then(
-                ignore => dispatch(doRegisterSuccessful(userDTO)),
+                ignore => dispatch(doRegisterSuccessful(userWithUuid)),
                 error => dispatch(doRegisterFailed(error)));
     }
 };
@@ -33,8 +37,4 @@ const doRegisterSuccessful = (userDTO) => dispatch => {
     dispatch({
         type: actionRegisterSuccessful
     });
-    dispatch(doLoginRequest({
-        email: userDTO.email,
-        password: userDTO.password
-    }))
 };
