@@ -26,7 +26,9 @@ export const loginReducer = (state = initialState, action) => {
         case actionAddFollowFailure:
             throw action.error;
         case actionRemoveFollowSuccess:
-            return state;
+            const following = [...state.loggedInUser.following]
+            const removedFollow = following.filter(user => user.uuid !== action.unfollow.uuid)
+            return {...state, loggedInUser: {...state.loggedInUser, following: removedFollow}};
         case actionRemoveFollowFailure:
             throw action.error;
         default:

@@ -39,19 +39,23 @@ export function doLoginSuccessful(data) {
     }
 }
 
-export const addFollow = (loggedInUser, followDto) => {
+export const addFollow = (loggedInUser, userToFollow) => {
+    const dto = {
+        to: userToFollow.uuid
+    }
+
     return (dispatch) => {
-        api.put(`users/${loggedInUser.uuid}/addFollow`, loggedInUser.uuid, followDto)
-            .then(() => dispatch(onSuccessfulAddFollow(followDto)),
+        api.put(`users/${loggedInUser.uuid}/addFollow`, dto)
+            .then(() => dispatch(onSuccessfulAddFollow(loggedInUser, userToFollow)),
                 error => dispatch(onErrorAddFollow(error)));
     };
 }
 
-const onSuccessfulAddFollow = followDto => {
-    console.log(followDto);
+const onSuccessfulAddFollow = (loggedInUser, userToFollow) => {
+    localStorage.setItem('loggedInUser', JSON.stringify({...loggedInUser, following: [...loggedInUser.following, userToFollow]}));
     return {
         type: actionAddFollowSuccess,
-        follow: followDto
+        follow: userToFollow
     }
 }
 
@@ -63,25 +67,33 @@ const onErrorAddFollow = error => {
     }
 }
 
-export const removeFollow = (loggedInUser, followDto) => {
+export const removeFollow = (loggedInUser, userToUnfollow) => {
+    const dto = {
+        to: userToUnfollow.uuid
+    }
+
     return (dispatch) => {
-        api.put(`users/${loggedInUser.uuid}/removeFollow`, loggedInUser.uuid, followDto)
-            .then(() => dispatch(onSuccessfulRemoveFollow(followDto)),
+        api.put(`users/${loggedInUser.uuid}/removeFollow`, dto)
+            .then(() => dispatch(onSuccessfulRemoveFollow(loggedInUser, userToUnfollow)),
                 error => dispatch(onErrorRemoveFollow(error)));
     };
 }
 
-const onSuccessfulRemoveFollow = followDto => {
+const onSuccessfulRemoveFollow = (loggedInUser, userToUnfollow) => {
+    const following = [...loggedInUser.following]
+    const removedFollow = following.filter(user => user.uuid !== userToUnfollow.uuid)
+    localStorage.setItem('loggedInUser', JSON.stringify({...loggedInUser, following: removedFollow}));
+
     return {
-        type: actionAddFollowSuccess,
-        follow: followDto
+        type: actionRemoveFollowSuccess,
+        unfollow: userToUnfollow
     }
 }
 
 const onErrorRemoveFollow = error => {
     console.log(error);
     return {
-        type: actionAddFollowFailure,
+        type: actionRemoveFollowSuccess,
         error: error
     }
 }

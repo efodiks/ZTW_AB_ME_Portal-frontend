@@ -23,7 +23,7 @@ const errorLoggingResponseInterceptor = error => {
 }
 
 api.interceptors.request.use(authorizationRequestInterceptor);
-api.interceptors.request.use(delayingRequestInterceptor(2000))
+//api.interceptors.request.use(delayingRequestInterceptor(2000))
 api.interceptors.response.use(null, errorLoggingResponseInterceptor)
 
 export default api;

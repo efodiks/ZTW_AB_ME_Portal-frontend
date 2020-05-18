@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Avatar from '../layout/Avatar.jsx';
 import {Card, Container, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
@@ -15,27 +15,22 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        handleAddFollow: (loggedInUser, followDto) => dispatch(addFollow(loggedInUser, followDto)),
-        handleRemoveFollow: (loggedInUser, followDto) => dispatch(removeFollow(loggedInUser, followDto))
+        handleAddFollow: (loggedInUser, userToFollow) => dispatch(addFollow(loggedInUser, userToFollow)),
+        handleRemoveFollow: (loggedInUser, userToUnfollow) => dispatch(removeFollow(loggedInUser, userToUnfollow))
     }
 }
 
 const UserCard = ({user, loggedInUser, handleAddFollow, handleRemoveFollow}) => {
 
-    const [followed, setFollowed] = useState(() => {
-        if (loggedInUser.following.some(followedUser => followedUser === user.id))
-            return true;
-        return false;
-    });
+    const followed = () => loggedInUser.following.some(followedUser => followedUser.uuid === user.uuid)
+
+    console.log(followed())
 
     const onClick = () => {
-        const followDto = {
-            to: user.uuid
-        };
-        if (followed)
-            handleRemoveFollow(loggedInUser, followDto);
+        if (followed())
+            handleRemoveFollow(loggedInUser, user);
         else
-            handleAddFollow(loggedInUser, followDto);
+            handleAddFollow(loggedInUser, user);
     }
 
     return (
@@ -48,8 +43,8 @@ const UserCard = ({user, loggedInUser, handleAddFollow, handleRemoveFollow}) => 
                     <h2>{user.username}</h2>
                 </div>
                 <div style={{display: "flex", justifyContent: "center", marginBottom: "3em"}}>
-                    <Button variant={followed ? "outline-info" : "info"} style={{width: "40%"}} onClick={onClick}>
-                        {followed ? "Unfollow" : "Follow"}
+                    <Button variant={followed() ? "outline-info" : "info"} style={{width: "40%"}} onClick={onClick}>
+                        {followed() ? "Unfollow" : "Follow"}
                     </Button>
                 </div>
             </Card>
