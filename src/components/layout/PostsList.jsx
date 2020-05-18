@@ -7,7 +7,6 @@ const PostsList = ({posts}) => {
         <Container style={{marginTop: "1em", marginBottom: "1em"}}>
             <CardColumns>
                 {posts.map(post => {
-                        console.log(post)
                         return (<PostCard
                             key={post.uuid}
                             author={post.author}

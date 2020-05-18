@@ -1,4 +1,6 @@
-import {actionLoginFailed, actionLoginLoading, actionLoginSuccessful, actionLogOut, clearLoginErrors} from "./actions";
+import {actionLoginFailed, actionLoginLoading, actionLoginSuccessful, actionLogOut, clearLoginErrors,
+        actionAddFollowSuccess, actionAddFollowFailure, actionRemoveFollowSuccess, actionRemoveFollowFailure
+} from "./actions";
 
 const initialState = {
     loading: false,
@@ -19,6 +21,14 @@ export const loginReducer = (state = initialState, action) => {
             return {loading: false, error: null, authorized: true, loggedInUser: action.loggedInUser};
         case actionLogOut:
             return {loading: false, error: null, authorized: false};
+        case actionAddFollowSuccess:
+            return {...state, loggedInUser: {...state.loggedInUser, following: [...state.loggedInUser.following, action.follow]}};
+        case actionAddFollowFailure:
+            throw action.error;
+        case actionRemoveFollowSuccess:
+            return state;
+        case actionRemoveFollowFailure:
+            throw action.error;
         default:
             return state;
     }
