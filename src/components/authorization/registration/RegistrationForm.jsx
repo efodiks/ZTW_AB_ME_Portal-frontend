@@ -23,7 +23,7 @@ const RegistrationForm = ({loading, error, handleRegister, handleClearErrors}) =
             <Container fluid>
                 <Row>
                     <Col>
-                        <Alert variant='danger' show={error !== null}>Something went wrong!</Alert>
+                        <Alert variant='danger' show={error}>Something went wrong!</Alert>
                     </Col>
                 </Row>
                 <Formik
@@ -45,7 +45,7 @@ const RegistrationForm = ({loading, error, handleRegister, handleClearErrors}) =
                           errors
                       }) => {
                         const handleChangeWithErrors = e => {
-                            if(error !== null) handleClearErrors()
+                            if(error) handleClearErrors()
                             return handleChange(e)
                         }
                         return (

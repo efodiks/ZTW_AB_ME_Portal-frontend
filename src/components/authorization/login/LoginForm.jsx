@@ -28,7 +28,7 @@ const LoginForm = ({handleLogin, loginLoading, loginError, handleClearErrors}) =
             <Container fluid>
                 <Row>
                     <Col>
-                        <Alert variant='danger' show={loginError !== null}>Something went wrong!</Alert>
+                        <Alert variant='danger' show={loginError}>Something went wrong!</Alert>
                     </Col>
                 </Row>
                 <Form onSubmit={handleSubmit}>

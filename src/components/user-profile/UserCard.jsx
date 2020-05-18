@@ -2,8 +2,8 @@ import React from 'react';
 import Avatar from '../layout/Avatar.jsx';
 import {Card, Container, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {addFollow} from '../authorization/login/actions';
-import {removeFollow} from '../authorization/login/actions';
+import {addFollow} from '../../state/application/login/loginActions';
+import {removeFollow} from '../../state/application/login/loginActions';
 
 const blankUserImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 

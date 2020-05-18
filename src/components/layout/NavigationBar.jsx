@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import {doLogOut} from './action';
+import {doLogout} from '../../state/application/login/loginActions';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     
     return {
-        handleLogOut: () => dispatch(doLogOut())
+        handleLogOut: () => dispatch(doLogout())
     }
 }
 
