@@ -25,7 +25,7 @@ export function removeFollow (loggedInUser, userToUnfollow) {
         to: userToUnfollow.uuid
     }
     const apiCall = () => api.put(`users/${loggedInUser.uuid}/removeFollow`, dto)
-    return performGenericRequest(userFollowButtonComponent, actionUnfollowUser, apiCall, null, userToUnfollow)
+    return performGenericRequest(userFollowButtonComponent, actionUnfollowUser, apiCall, null, loggedInUser)
 }
 
 
@@ -34,5 +34,5 @@ export const addFollow = (loggedInUser, userToFollow) => {
         to: userToFollow.uuid
     }
     const apiCall = () => api.put(`users/${loggedInUser.uuid}/addFollow`, dto)
-    return performGenericRequest(userFollowButtonComponent, actionFollowUser, apiCall, null, userToFollow)
+    return performGenericRequest(userFollowButtonComponent, actionFollowUser, apiCall, null, loggedInUser)
 }

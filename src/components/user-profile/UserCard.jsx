@@ -21,7 +21,11 @@ const mapDispatchToProps = dispatch => {
 
 const UserCard = ({user, loggedInUser, handleAddFollow, handleRemoveFollow}) => {
 
-    const followed = () => loggedInUser.following.some(followedUser => followedUser.uuid === user.uuid)
+    const followed = () => {
+        if(!user.followedBy)
+            return false
+        return user.followedBy.some(followingUser => followingUser.uuid === loggedInUser.uuid)
+    }
 
     const onClick = () => {
         if (followed())
