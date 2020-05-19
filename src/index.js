@@ -10,18 +10,18 @@ import {loginReducer} from "./state/application/login/loginReducer";
 import {connectRouter, routerMiddleware} from "connected-react-router";
 import {createBrowserHistory} from 'history'
 import {composeWithDevTools} from "redux-devtools-extension";
-import {dashboardReducer} from "./components/dashboard/reducer";
-import {feedReducer} from "./components/feed/reducer";
-import {userProfileReducer} from "./components/user-profile/reducer";
 import {requestReducer} from "./state/request/requestReducer";
+import {dashboardPostsReducer} from "./state/domain/dashboardPosts/dashboardPostsReducer";
+import {feedPostsReducer} from "./state/domain/feedPosts/feedPostsReducer";
+import {userReducer} from "./state/domain/user/userReducer";
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
     request: requestReducer,
     loginState: loginReducer,
-    dashboardState: dashboardReducer,
-    feedState: feedReducer,
-    userProfileState: userProfileReducer
+    dashboardPosts: dashboardPostsReducer,
+    feedPosts: feedPostsReducer,
+    user: userReducer
 });
 
 export const history = createBrowserHistory();

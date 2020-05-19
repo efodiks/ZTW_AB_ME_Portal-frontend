@@ -1,4 +1,5 @@
 import {actionLogin, actionLogout} from "./loginActions";
+import {actionFollowUser, actionUnfollowUser} from "../../domain/user/userActions";
 
 const initialState = {
     authorized: localStorage.getItem('token'),
@@ -15,6 +16,22 @@ export const loginReducer = (state = initialState, action) => {
             }
         case actionLogout:
             return {}
+        case actionFollowUser:
+            return {
+                ...state,
+                loggedInUser: {
+                    ...state.loggedInUser,
+                    following: [...state.loggedInUser.following, action.payload]
+                }
+            }
+        case actionUnfollowUser:
+            return {
+                ...state,
+                loggedInUser: {
+                    ...state.loggedInUser,
+                    following: state.loggedInUser.following.filter(u => u.uuid !== action.payload)
+                }
+            }
         default:
             return state;
     }

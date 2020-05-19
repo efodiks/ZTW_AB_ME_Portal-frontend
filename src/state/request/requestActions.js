@@ -15,7 +15,7 @@ export function clearErrorPicker(dispatch, componentName) {
     })
 }
 
-export function performGenericRequest(componentName, actionName, apiCall, responseSideEffect = null) {
+export function performGenericRequest(componentName, actionName, apiCall, responseSideEffect = null, payload = null) {
     return async dispatch => {
         dispatch({
             type: RequestActions.actionRequest,
@@ -24,6 +24,7 @@ export function performGenericRequest(componentName, actionName, apiCall, respon
         try {
             const response = await apiCall()
             const data = response.data
+            const actionPayload = payload === null ? data : payload
 
             if (responseSideEffect !== null) {
                 responseSideEffect(data, dispatch)
@@ -32,9 +33,10 @@ export function performGenericRequest(componentName, actionName, apiCall, respon
                 type: RequestActions.actionSuccess,
                 payload: componentName
             })
+
             dispatch({
                 type: actionName,
-                payload: data
+                payload: actionPayload
             })
         } catch (e) {
             console.log(e)

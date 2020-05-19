@@ -2,8 +2,7 @@ import React from 'react';
 import Avatar from '../layout/Avatar.jsx';
 import {Card, Container, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {addFollow} from '../../state/application/login/loginActions';
-import {removeFollow} from '../../state/application/login/loginActions';
+import {addFollow, removeFollow} from "../../state/domain/user/userActions";
 
 const blankUserImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
@@ -23,8 +22,6 @@ const mapDispatchToProps = dispatch => {
 const UserCard = ({user, loggedInUser, handleAddFollow, handleRemoveFollow}) => {
 
     const followed = () => loggedInUser.following.some(followedUser => followedUser.uuid === user.uuid)
-
-    console.log(followed())
 
     const onClick = () => {
         if (followed())

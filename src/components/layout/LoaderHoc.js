@@ -10,7 +10,9 @@ const LoaderHoc = ({
                        ...rest
                    }) => {
 
-    useEffect(loadData, [])
+    useEffect(() => {
+        loadData()
+    }, [])
 
     if (loading) {
         return (
