@@ -13,6 +13,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import {requestReducer} from "./state/request/requestReducer";
 import {dashboardPostsReducer} from "./state/domain/dashboardPosts/dashboardPostsReducer";
 import {feedPostsReducer} from "./state/domain/feedPosts/feedPostsReducer";
+import {suggestedPostsReducer} from "./state/domain/suggestedPosts/suggestedPostsReducer";
 import {userReducer} from "./state/domain/user/userReducer";
 
 const createRootReducer = (history) => combineReducers({
@@ -21,6 +22,7 @@ const createRootReducer = (history) => combineReducers({
     loginState: loginReducer,
     dashboardPosts: dashboardPostsReducer,
     feedPosts: feedPostsReducer,
+    suggestedPosts: suggestedPostsReducer,
     user: userReducer
 });
 

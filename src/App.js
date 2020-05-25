@@ -6,6 +6,7 @@ import Registration from './components/authorization/registration/Registration.j
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import Feed from './components/feed/Feed.jsx';
 import UserProfile from './components/user-profile/UserProfile.jsx';
+import Suggested from './components/suggested/Suggested.jsx';
 import {Route, Switch} from 'react-router-dom';
 import {Provider} from "react-redux";
 import {ConnectedRouter} from "connected-react-router";
@@ -21,6 +22,7 @@ function App({store}) {
                     <Route path="/register" component={Registration}/>
                     <Route path="/feed" component={Feed}/>
                     <Route path="/user/:userId" component={UserProfile}/>
+                    <Route path="/suggested" component={Suggested}/>
                     <Route path="/" exact component={Login}/>
                 </Switch>
             </ConnectedRouter>

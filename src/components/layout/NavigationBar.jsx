@@ -31,6 +31,8 @@ const NavigationBar = ({authorized, handleLogOut}) => {
                     <Nav.Link as={NavLink} to='/dashboard/posts'>My posts</Nav.Link>}
                 {authorized &&
                     <Nav.Link as={NavLink} to='/dashboard/addpost'>Add post</Nav.Link>}
+                {authorized &&
+                    <Nav.Link as={NavLink} to='/suggested'>Suggested posts</Nav.Link>}
                 {authorized && <Nav.Link onClick={handleLogOut}>Log out</Nav.Link>}
             </Nav>
         </Navbar.Collapse>
