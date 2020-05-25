@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://backend:8080/api/'
+    baseURL: 'http://64.225.92.27:8080/api/'
 });
 
 const authorizationRequestInterceptor = requestConfig => {
